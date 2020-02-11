@@ -52,6 +52,17 @@ public class ZKHelixNonblockingLock implements HelixLock {
    * Initialize the lock with user provided information, e.g.,cluster, scope, etc.
    * @param scope the scope to lock
    * @param zkAddress the zk address the cluster connects to
+   * @param content the information such as timeout, owner id, message in a ZNRecord
+   */
+  public ZKHelixNonblockingLock(HelixLockScope scope, String zkAddress, ZNRecord content) {
+    this(scope.getZkPath(), zkAddress, LockInfo.getTimeout(content), LockInfo.getMessage(content),
+        LockInfo.getOwner(content));
+  }
+
+  /**
+   * Initialize the lock with user provided information, e.g.,cluster, scope, etc.
+   * @param scope the scope to lock
+   * @param zkAddress the zk address the cluster connects to
    * @param timeout the timeout period of the lcok
    * @param lockMsg the reason for having this lock
    * @param userId a universal unique userId for lock owner identity
