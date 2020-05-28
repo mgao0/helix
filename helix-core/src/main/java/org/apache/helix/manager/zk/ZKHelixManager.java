@@ -171,7 +171,6 @@ public class ZKHelixManager implements HelixManager, IZkStateListener {
   private CallbackHandler _leaderElectionHandler = null;
   protected final List<HelixTimerTask> _controllerTimerTasks = new ArrayList<>();
 
-  private static final long VALUE_NOT_SET = -1;
   private long _messageRefreshInterval;
 
   /**
@@ -295,7 +294,8 @@ public class ZKHelixManager implements HelixManager, IZkStateListener {
         .getSystemPropertyAsInt(SystemPropertyKeys.PARTICIPANT_HEALTH_REPORT_LATENCY,
             ParticipantHealthReportTask.DEFAULT_REPORT_LATENCY);
 
-    _messageRefreshInterval =  HelixUtil.getSystemPropertyAsLong(SystemPropertyKeys.MESSAGE_REFRESH_INTERVAL, VALUE_NOT_SET);
+    _messageRefreshInterval =  HelixUtil.getSystemPropertyAsLong(SystemPropertyKeys.MESSAGE_REFRESH_INTERVAL,
+        SystemPropertyKeys.PROPERTY_NOT_SET);
 
     MonitorLevel configuredMonitorLevel;
     try {
@@ -410,7 +410,7 @@ public class ZKHelixManager implements HelixManager, IZkStateListener {
 
   void addListener(Object listener, PropertyKey propertyKey, ChangeType changeType,
       EventType[] eventType) {
-    addListener(listener, propertyKey, changeType, eventType, VALUE_NOT_SET);
+    addListener(listener, propertyKey, changeType, eventType, SystemPropertyKeys.PROPERTY_NOT_SET);
   }
 
   void addListener(Object listener, PropertyKey propertyKey, ChangeType changeType,
