@@ -450,6 +450,10 @@ public class CallbackHandler implements IZkChildListener, IZkDataListener {
     Type type = changeContext.getType();
     long start = System.currentTimeMillis();
 
+    if (_periodicTriggerExecutor != null) {
+      _lastInvokeTime = System.currentTimeMillis();
+    }
+
     // This allows the listener to work with one change at a time
     synchronized (_manager) {
       if (logger.isInfoEnabled()) {
@@ -471,10 +475,6 @@ public class CallbackHandler implements IZkChildListener, IZkDataListener {
       } else {
         // put SubscribeForChange run in async thread to reduce the latency of zk callback handling.
         subscribeForChangesAsyn(changeContext.getType(), _path, _watchChild);
-      }
-
-      if (_periodicTriggerExecutor != null) {
-        _lastInvokeTime = System.currentTimeMillis();
       }
 
       if (_changeType == IDEAL_STATE) {
