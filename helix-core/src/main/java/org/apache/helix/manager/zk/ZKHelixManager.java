@@ -173,7 +173,7 @@ public class ZKHelixManager implements HelixManager, IZkStateListener {
 
   /** Set this variable to negative can disable the message periodic refresh feature */
   private final long _messageRefreshTriggerInterval;
-  private static final long DEFAULT_PERIODIC_MESSAGE_REFRESH_INTERVAL = 5 * 60 * 1000;
+  private static final long DEFAULT_PERIODIC_MESSAGE_REFRESH_INTERVAL = -1;
 
   /**
    * status dump timer-task
