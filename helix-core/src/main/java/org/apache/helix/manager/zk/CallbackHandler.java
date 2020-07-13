@@ -242,6 +242,9 @@ public class CallbackHandler implements IZkChildListener, IZkDataListener {
 
     @Override
     public void run() {
+      if (!isReady()) {
+        return;
+      }
       long currentTime = System.currentTimeMillis();
       long remainingTime = _lastInvokeTime + _triggerInterval - currentTime;
 
@@ -897,6 +900,7 @@ public class CallbackHandler implements IZkChildListener, IZkDataListener {
         isShutdown);
     try {
       _ready = false;
+      shutDownTriggerTask();
       synchronized (this) {
         if (_batchCallbackProcessor != null) {
           if (isShutdown) {
@@ -906,7 +910,6 @@ public class CallbackHandler implements IZkChildListener, IZkDataListener {
             _batchCallbackProcessor.resetEventQueue();
           }
         }
-        shutDownTriggerTask();
       }
       NotificationContext changeContext = new NotificationContext(_manager);
       changeContext.setType(NotificationContext.Type.FINALIZE);
