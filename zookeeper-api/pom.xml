@@ -53,9 +53,10 @@
       <version>${project.version}</version>
     </dependency>
     <dependency>
-      <groupId>org.apache.zookeeper</groupId>
-      <artifactId>zookeeper</artifactId>
-      <version>3.4.13</version>
+      <groupId>com.linkedin.zookeeper</groupId>
+      <artifactId>parent</artifactId>
+      <version>3.6.1-li-test</version>
+      <type>pom</type>
       <exclusions>
         <exclusion>
           <groupId>junit</groupId>

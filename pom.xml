@@ -322,6 +322,14 @@
 
   <repositories>
     <repository>
+      <snapshots>
+        <enabled>false</enabled>
+      </snapshots>
+      <id>bintray-linkedin-maven</id>
+      <name>bintray</name>
+      <url>https://linkedin.bintray.com/maven</url>
+    </repository>
+    <repository>
       <id>mvnrepository.com</id>
       <url>https://mvnrepository.com</url>
       <releases>
