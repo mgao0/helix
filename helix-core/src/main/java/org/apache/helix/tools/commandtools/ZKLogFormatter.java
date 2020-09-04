@@ -51,6 +51,7 @@ import org.apache.zookeeper.server.util.SerializeUtils;
 import org.apache.zookeeper.txn.TxnHeader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.apache.zookeeper.server.TxnLogEntry;
 
 public class ZKLogFormatter {
   private static final Logger LOG = LoggerFactory.getLogger(ZKLogFormatter.class);
@@ -249,12 +250,12 @@ public class ZKLogFormatter {
         throw new IOException("CRC doesn't match " + crcValue + " vs " + crc.getValue());
       }
       TxnHeader hdr = new TxnHeader();
-      Record txn = SerializeUtils.deserializeTxn(bytes, hdr);
+      TxnLogEntry txn = SerializeUtils.deserializeTxn(bytes);
       if (bw != null) {
-        bw.write(formatTransaction(hdr, txn));
+        bw.write(formatTransaction(hdr, txn.getTxn()));
         bw.newLine();
       } else {
-        System.out.println(formatTransaction(hdr, txn));
+        System.out.println(formatTransaction(hdr, txn.getTxn()));
       }
 
       if (logStream.readByte("EOR") != 'B') {
